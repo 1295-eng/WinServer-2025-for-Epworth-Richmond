@@ -1,0 +1,290 @@
+# WinServer-2025-for-Epworth-Richmond
+
+**Healthcare-Grade Infrastructure as Code for Hyper-V Deployment**
+
+A comprehensive, production-ready PowerShell deployment automation framework for establishing secure, scalable Hyper-V infrastructure with enterprise-grade identity and access management for healthcare facilities.
+
+[![Validate PowerShell Scripts](../../actions/workflows/validate.yml/badge.svg)](../../actions/workflows/validate.yml)
+![License](https://img.shields.io/badge/License-MIT-blue.svg)
+![Version](https://img.shields.io/badge/Version-1.0.0-green.svg)
+
+---
+
+## 🏥 Overview
+
+This project provides **A-to-Z deployment automation** for creating a secure, compliant Hyper-V infrastructure designed specifically for healthcare organizations. It implements:
+
+- ✅ **Infrastructure as Code (IaC)** - Reproducible, version-controlled deployments
+- ✅ **Defense in Depth** - Multi-layered security and data isolation
+- ✅ **Clinical Data Protection** - HIPAA-compliant configurations
+- ✅ **Automated Provisioning** - Eliminates manual configuration errors
+- ✅ **Enterprise Scalability** - Ready for production healthcare environments
+
+---
+
+## 📋 Features
+
+### Core Capabilities
+
+- **Phase A**: Physical environment validation and power optimization
+- **Phase M**: Hyper-V installation, network switching, and storage setup
+- **Phase Z**: Advanced QoS policies and storage replication
+- **Phase Ω**: Virtual machine provisioning for clinical endpoints
+
+### Safety & Validation
+
+- Pre-flight system checks (Admin privileges, OS compatibility, HyperV capabilities)
+- Disk space validation before storage creation
+- Network adapter detection and validation
+- Comprehensive error handling with try-catch throughout
+- Full transcript logging for audit trails
+
+### Security Features
+
+- Storage directory ACL hardening
+- Inheritance protection on sensitive paths
+- Admin-only access to VM storage
+- HIPAA compliance-ready configuration
+- Clinical data isolation via dedicated virtual switches
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- **Windows Server 2022+** (Windows 10+ required)
+- **Administrator** privileges
+- **100GB+** free disk space
+- **PowerShell 5.1+**
+- **Active network adapter**
+
+### Installation
+
+1. **Clone the repository:**
+   ```powershell
+   git clone https://github.com/1295-eng/WinServer-2025-for-Epworth-Richmond.git
+   cd WinServer-2025-for-Epworth-Richmond
+   ```
+
+2. **Review configuration:**
+   ```powershell
+   code src/config/default-config.psd1
+   ```
+
+3. **Run deployment:**
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File .\src\Deploy.ps1
+   ```
+
+### Advanced Usage
+
+**Skip specific phases:**
+```powershell
+.\src\Deploy.ps1 -SkipPhaseA -SkipPhaseZ
+```
+
+**Use custom configuration:**
+```powershell
+.\src\Deploy.ps1 -ConfigPath ".\custom-config.psd1"
+```
+
+---
+
+## 📂 Project Structure
+
+```
+.
+├── .devcontainer/              # Codespaces configuration
+├── .github/
+│   ├── workflows/              # GitHub Actions CI/CD
+│   └── ISSUE_TEMPLATE/
+├── src/
+│   ├── phases/                 # Deployment phases (A, M, Z, Ω)
+│   ├── modules/                # Reusable PowerShell modules
+│   │   ├── Logging.psm1       # Centralized logging
+│   │   ├── Validation.psm1    # System validation
+│   │   ├── Storage.psm1       # Storage management
+│   │   └── Network.psm1       # Network configuration
+│   ├── config/                 # Configuration files
+│   │   └── default-config.psd1
+│   └── Deploy.ps1             # Main orchestration script
+├── tests/
+│   ├── Unit/                   # Pester unit tests
+│   └── Integration/            # Integration tests
+├── docs/
+│   ├── README.md              # This file
+│   ├── ARCHITECTURE.md        # System design documentation
+│   ├── DEPLOYMENT.md          # Detailed deployment guide
+│   └── TROUBLESHOOTING.md     # Common issues and solutions
+├── scripts/                    # Utility scripts
+├── VERSION                     # Semantic versioning
+└── LICENSE
+```
+
+---
+
+## 🔧 Configuration
+
+The deployment is controlled via `src/config/default-config.psd1`:
+
+```powershell
+@{
+    # Storage paths
+    Storage = @{
+        StorageRoot = "C:\ClusterStorage\HyperV-Data"
+        RequiredDiskSpaceGB = 100
+    }
+    
+    # Network configuration
+    Network = @{
+        ExternalSwitchName = "Clinical-External-Switch"
+        EnableQoS = $true
+    }
+    
+    # Hyper-V settings
+    HyperV = @{
+        DefaultMemoryGB = 4
+        DefaultProcessorCount = 2
+    }
+    
+    # Clinical/Healthcare compliance
+    Clinical = @{
+        DataIsolation = $true
+        ComplianceMode = "HIPAA"
+        AuditLogging = $true
+    }
+}
+```
+
+---
+
+## 📝 Deployment Phases
+
+### Phase A: Physical Environment & Preparation
+- Verifies Hyper-V firmware support
+- Optimizes power configuration to High-Performance
+- Validates system meets minimum requirements
+
+### Phase M: Core Installation & Hyper-V Supervising
+- Installs Hyper-V role with management tools
+- Discovers and binds fastest network adapter
+- Creates clinical-grade external virtual switch
+- Establishes isolated storage repositories with hardened ACLs
+
+### Phase Z: Virtual Network & Storage Typologies
+- Configures QoS policies for medical data prioritization
+- Sets up storage replication for high-availability
+- Implements redundancy for clinical data
+
+### Phase Ω: Virtual Machine Provisioning
+- Provisions clinical endpoint virtual machines
+- Configures VM resources (memory, processors)
+- Connects VMs to clinical isolation switch
+- Manages VM lifecycle operations
+
+---
+
+## 🧪 Testing
+
+### Run Unit Tests
+```powershell
+Install-Module -Name Pester -Force
+Invoke-Pester -Path .\tests\Unit
+```
+
+### Validate PowerShell Scripts
+```powershell
+Install-Module -Name PSScriptAnalyzer -Force
+Invoke-ScriptAnalyzer -Path .\src -Recurse
+```
+
+---
+
+## 📊 Logging
+
+All operations are logged to:
+```
+C:\Logs\Deployment-Automation-<YYYYMMDD-HHMMSS>.log
+```
+
+Review logs for:
+- Phase execution details
+- Error diagnostics
+- System configuration changes
+- Audit trails for compliance
+
+---
+
+## 🔐 Security Considerations
+
+This framework implements healthcare-grade security:
+
+1. **Access Control** - Restricted ACLs on storage directories
+2. **Data Isolation** - Dedicated virtual switch for clinical traffic
+3. **Logging** - Comprehensive audit trails
+4. **Validation** - Pre-deployment system checks
+5. **Error Handling** - Graceful failure with clear diagnostics
+
+---
+
+## 🐛 Troubleshooting
+
+See [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) for:
+- Common errors and solutions
+- Diagnostic steps
+- Recovery procedures
+- Performance tuning
+
+---
+
+## 📖 Additional Documentation
+
+- [ARCHITECTURE.md](docs/ARCHITECTURE.md) - System design and topology
+- [DEPLOYMENT.md](docs/DEPLOYMENT.md) - Step-by-step deployment guide
+- [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) - Problem resolution
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License - see [LICENSE](LICENSE) file for details.
+
+---
+
+## 📞 Support
+
+For issues, questions, or contributions:
+
+- **Issues**: [GitHub Issues](../../issues)
+- **Discussions**: [GitHub Discussions](../../discussions)
+- **Email**: JamesWeardley@outlook.com
+
+---
+
+## ⚠️ Disclaimer
+
+This framework is designed for healthcare environments. Ensure compliance with:
+
+- HIPAA (Health Insurance Portability and Accountability Act)
+- Local healthcare regulations
+- Organizational security policies
+- Data protection standards (GDPR, etc.)
+
+Always test in non-production environments first.
+
+---
+
+**Last Updated**: 2026-08-18 | **Version**: 1.0.0 | **Maintained by**: 1295-eng
